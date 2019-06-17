@@ -1,0 +1,32 @@
+clickhouse:
+  -
+    # 引用的key(必需)
+    key: demo
+    # 地址(必需). 多值用逗号分隔
+    address: "10.11.165.44:9000"
+    # DB名字(必需)
+    database: "demo"
+    # 用户名(可选)
+    username: ""
+    # 密码(可选)
+    password: ""
+    # 最大空闲数量(可选)
+    maxIdleConns:
+    # 最大打开数量(可选)
+    maxOpenConns:
+    # 最大lifetime(可选)
+    connMaxLifetime: "0s"
+    # 读超时(秒)
+    read_timeout: 10
+    # 写超时(秒)
+    write_timeout : 10
+    # 无延迟
+    no_delay: true
+    # connection_open_strategy 连接打开策略
+    connection_open_strategy: "random"
+    # 读写块大小
+    block_size: 1000000
+    # 连接池大小
+    pool_size: 100
+    # 是否debug
+    debug: false

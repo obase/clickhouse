@@ -1,0 +1,16 @@
+bin/
+target/
+.*
+.*/
+*.yml
+*.iml
+*.class
+*.exe
+*/**/.*
+*/**/.*/
+*/**/*.yml
+*/**/*.iml
+*/**/*.class
+main
+go.sum
+!.gitignore
