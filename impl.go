@@ -1,7 +1,6 @@
 package clickhouse
 
 import (
-	"context"
 	"database/sql"
 	"math"
 	"reflect"
@@ -15,17 +14,6 @@ func newMysql(db *sql.DB) *mysqlImpl {
 	return &mysqlImpl{
 		DB: db,
 	}
-}
-
-func (m *mysqlImpl) BeginTx(ctx context.Context) (ret Tx, err error) {
-	tx, err := m.DB.BeginTx(ctx, nil)
-	if err != nil {
-		return
-	}
-	ret = &txImpl{
-		Tx: tx,
-	}
-	return
 }
 
 func (m *mysqlImpl) Scan(psql string, srf ScanRowsFunc, args ...interface{}) (ret interface{}, err error) {

@@ -1,7 +1,6 @@
 package clickhouse
 
 import (
-	"context"
 	"database/sql"
 	"errors"
 	"strings"
@@ -36,15 +35,8 @@ type Operation interface {
 	ExecBatch(psql string, argsList ...interface{}) (retList []sql.Result, err error)
 }
 
-type Mysql interface {
+type Clickhouse interface {
 	Operation
-	BeginTx(ctx context.Context) (tx Tx, err error)
-}
-
-type Tx interface {
-	Operation
-	Commit() (err error)
-	Rollback() (err error)
 }
 
 func Scan(psql string, srf ScanRowsFunc, args ...interface{}) (ret interface{}, err error) {
@@ -79,10 +71,6 @@ func ExecBatch(psql string, argsList ...interface{}) (retList []sql.Result, err 
 	return Default.ExecBatch(psql, argsList...)
 }
 
-func BeginTx(ctx context.Context) (Tx, error) {
-	return Default.BeginTx(ctx)
-}
-
 var (
 	Default *mysqlImpl
 	Clients map[string]*mysqlImpl = make(map[string]*mysqlImpl, 8) //默认给8个
@@ -112,7 +100,7 @@ func Setup(name string, db *sql.DB, def bool) (err error) {
 	return
 }
 
-func Get(name string) Mysql {
+func Get(name string) Clickhouse {
 	if rt, ok := Clients[name]; ok {
 		return rt
 	}

@@ -1,7 +1,6 @@
 package clickhouse
 
 import (
-	"context"
 	"database/sql"
 	"fmt"
 	"testing"
@@ -49,18 +48,6 @@ func TestScanOne2(t *testing.T) {
 		fmt.Printf("not existed")
 	}
 	fmt.Printf("%v\n", rec)
-}
-
-func TestBeginTx(t *testing.T) {
-	demo := Get("demo")
-	tx, err := demo.BeginTx(context.Background())
-
-	rt, err := tx.ExecBatch("insert into t1(name) values(?)", "abc", "jason", "woh")
-	if err != nil {
-		t.Fatal(err)
-	}
-	fmt.Println(rt)
-	tx.Commit()
 }
 
 func TestScanOne3(t *testing.T) {
