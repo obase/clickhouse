@@ -1,4 +1,4 @@
-module github.com/obase/mysql
+module github.com/obase/clickhouse
 
 go 1.12
 
