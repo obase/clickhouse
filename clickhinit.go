@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	_ "github.com/kshvakov/clickhouse"
 	"github.com/obase/conf"
+	"net/url"
 	"strconv"
 	"strings"
 )
@@ -113,5 +114,5 @@ func addit(sb *strings.Builder, key, val string) {
 	}
 	sb.WriteString(key)
 	sb.WriteByte('=')
-	sb.WriteString(val)
+	sb.WriteString(url.QueryEscape(val))
 }
