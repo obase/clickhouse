@@ -26,7 +26,7 @@ func init() {
 			if ok {
 				addit(sb, "username", username)
 			}
-			password, ok := conf.ElemString(config, "password ")
+			password, ok := conf.ElemString(config, "password")
 			if ok {
 				addit(sb, "password", password)
 			}
@@ -50,17 +50,17 @@ func init() {
 			if ok {
 				addit(sb, "connection_open_strategy", connection_open_strategy)
 			}
-			block_size, ok := conf.ElemString(config, "block_size ")
+			block_size, ok := conf.ElemString(config, "block_size")
 			if ok {
-				addit(sb, "block_size ", block_size)
+				addit(sb, "block_size", block_size)
 			}
-			pool_size, ok := conf.ElemString(config, "pool_size ")
+			pool_size, ok := conf.ElemString(config, "pool_size")
 			if ok {
-				addit(sb, "pool_size ", pool_size)
+				addit(sb, "pool_size", pool_size)
 			}
 			debug, ok := conf.ElemString(config, "debug")
 			if ok {
-				addit(sb, "pool_size ", debug)
+				addit(sb, "pool_size", debug)
 			}
 			address, ok := conf.ElemStringSlice(config, "address")
 			if len(address) > 1 {
