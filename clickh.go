@@ -89,9 +89,7 @@ func Setup(name string, db *sql.DB, def bool) (err error) {
 
 	client := &mysqlImpl{DB: db}
 	for _, k := range strings.Split(name, ",") {
-		if k = strings.TrimSpace(k); len(k) > 0 {
-			Clients[k] = client
-		}
+		Clients[k] = client
 	}
 	if def {
 		Default = client
