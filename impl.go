@@ -6,17 +6,17 @@ import (
 	"reflect"
 )
 
-type mysqlImpl struct {
+type clickhImpl struct {
 	*sql.DB
 }
 
-func newMysql(db *sql.DB) *mysqlImpl {
-	return &mysqlImpl{
+func newMysql(db *sql.DB) *clickhImpl {
+	return &clickhImpl{
 		DB: db,
 	}
 }
 
-func (m *mysqlImpl) Scan(psql string, srf ScanRowsFunc, args ...interface{}) (ret interface{}, err error) {
+func (m *clickhImpl) Scan(psql string, srf ScanRowsFunc, args ...interface{}) (ret interface{}, err error) {
 
 	pstmt, err := m.DB.Prepare(psql)
 	if err != nil {
@@ -31,7 +31,7 @@ func (m *mysqlImpl) Scan(psql string, srf ScanRowsFunc, args ...interface{}) (re
 	return srf(rows)
 }
 
-func (m *mysqlImpl) ScanAll(psql string, srf ScanRowFunc, args ...interface{}) (ret interface{}, err error) {
+func (m *clickhImpl) ScanAll(psql string, srf ScanRowFunc, args ...interface{}) (ret interface{}, err error) {
 
 	pstmt, err := m.DB.Prepare(psql)
 	if err != nil {
@@ -66,7 +66,7 @@ func (m *mysqlImpl) ScanAll(psql string, srf ScanRowFunc, args ...interface{}) (
 	return
 }
 
-func (m *mysqlImpl) ScanOne2(psql string, to interface{}, args ...interface{}) (ok bool, err error) {
+func (m *clickhImpl) ScanOne2(psql string, to interface{}, args ...interface{}) (ok bool, err error) {
 
 	pstmt, err := m.DB.Prepare(psql)
 	if err != nil {
@@ -93,7 +93,7 @@ func (m *mysqlImpl) ScanOne2(psql string, to interface{}, args ...interface{}) (
 	return
 }
 
-func (m *mysqlImpl) ScanOne(psql string, srf ScanRowFunc, args ...interface{}) (ret interface{}, err error) {
+func (m *clickhImpl) ScanOne(psql string, srf ScanRowFunc, args ...interface{}) (ret interface{}, err error) {
 
 	pstmt, err := m.DB.Prepare(psql)
 	if err != nil {
@@ -116,7 +116,7 @@ func (m *mysqlImpl) ScanOne(psql string, srf ScanRowFunc, args ...interface{}) (
 }
 
 /*如果源SQL没有limit子句,则直接拼到最后即可*/
-func (m *mysqlImpl) ScanRange(psql string, srf ScanRowFunc, offset int, limit int, args ...interface{}) (ret interface{}, err error) {
+func (m *clickhImpl) ScanRange(psql string, srf ScanRowFunc, offset int, limit int, args ...interface{}) (ret interface{}, err error) {
 	meta := GetSqlMeta(psql)
 	if meta.LimitPsql == "" {
 		GenLimitSql(psql, meta)
@@ -156,7 +156,7 @@ func (m *mysqlImpl) ScanRange(psql string, srf ScanRowFunc, offset int, limit in
 	return
 }
 
-func (m *mysqlImpl) ScanPage(psql string, srf ScanRowFunc, offset int, limit int, sort string, desc bool, args ...interface{}) (tot int, ret interface{}, err error) {
+func (m *clickhImpl) ScanPage(psql string, srf ScanRowFunc, offset int, limit int, sort string, desc bool, args ...interface{}) (tot int, ret interface{}, err error) {
 
 	aln := len(args)
 
@@ -212,7 +212,7 @@ func (m *mysqlImpl) ScanPage(psql string, srf ScanRowFunc, offset int, limit int
 	return
 }
 
-func (m *mysqlImpl) scanPageTotal(psql string, meta *SqlMeta, args ...interface{}) (ret int, err error) {
+func (m *clickhImpl) scanPageTotal(psql string, meta *SqlMeta, args ...interface{}) (ret int, err error) {
 	// 查询总数
 	if meta.TotalPsql == "" {
 		GenTotalSql(psql, meta)
@@ -235,7 +235,7 @@ func (m *mysqlImpl) scanPageTotal(psql string, meta *SqlMeta, args ...interface{
 	return
 }
 
-func (m *mysqlImpl) Exec(psql string, args ...interface{}) (ret sql.Result, err error) {
+func (m *clickhImpl) Exec(psql string, args ...interface{}) (ret sql.Result, err error) {
 	pstmt, err := m.DB.Prepare(psql)
 	if err != nil {
 		return
@@ -245,7 +245,7 @@ func (m *mysqlImpl) Exec(psql string, args ...interface{}) (ret sql.Result, err 
 	return
 }
 
-func (m *mysqlImpl) ExecBatch(psql string, argsList ...interface{}) (retList []sql.Result, err error) {
+func (m *clickhImpl) ExecBatch(psql string, argsList ...interface{}) (retList []sql.Result, err error) {
 	tx, err := m.DB.Begin()
 	if err != nil {
 		return

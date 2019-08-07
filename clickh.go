@@ -72,8 +72,8 @@ func ExecBatch(psql string, argsList ...interface{}) (retList []sql.Result, err 
 }
 
 var (
-	Default *mysqlImpl
-	Clients map[string]*mysqlImpl = make(map[string]*mysqlImpl, 8) //默认给8个
+	Default *clickhImpl
+	Clients map[string]*clickhImpl = make(map[string]*clickhImpl, 8) //默认给8个
 )
 
 var ErrDupKey = errors.New("duplicate client name")
@@ -87,7 +87,7 @@ func Setup(name string, db *sql.DB, def bool) (err error) {
 		return
 	}
 
-	client := &mysqlImpl{DB: db}
+	client := &clickhImpl{DB: db}
 	for _, k := range strings.Split(name, ",") {
 		Clients[k] = client
 	}
