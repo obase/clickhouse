@@ -60,7 +60,7 @@ func init() {
 			}
 			debug, ok := conf.ElemString(config, "debug")
 			if ok {
-				addit(sb, "pool_size", debug)
+				addit(sb, "debug", debug)
 			}
 			address, ok := conf.ElemStringSlice(config, "address")
 			if len(address) > 1 {
