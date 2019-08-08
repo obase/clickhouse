@@ -7,7 +7,15 @@ import (
 	"unicode"
 )
 
-var sqlMetaMap *sync.Map = new(sync.Map)
+type Map struct {
+	Data map[string]*SqlMeta
+	Mutx *sync.RWMutex
+}
+
+var sqlMetaMap = &Map{
+	Data: make(map[string]*SqlMeta),
+	Mutx: new(sync.RWMutex),
+}
 
 var (
 	SELECT   = []rune("SELECT")
@@ -328,12 +336,16 @@ func regionMatchesIgnoreCase(ps []rune, start1 int, ns []rune, start2 int, len i
 }
 
 func GetSqlMeta(psql string) (ret *SqlMeta) {
-	vl, ok := sqlMetaMap.Load(psql)
+	sqlMetaMap.Mutx.RLock()
+	vl, ok := sqlMetaMap.Data[psql]
+	sqlMetaMap.Mutx.RUnlock()
 	if !ok {
 		vl = ParseSqlMeta(psql)
-		sqlMetaMap.Store(psql, vl)
+		sqlMetaMap.Mutx.Lock()
+		sqlMetaMap.Data[psql] = vl
+		sqlMetaMap.Mutx.Unlock()
 	}
-	ret = vl.(*SqlMeta)
+	ret = vl
 	return
 }
 
