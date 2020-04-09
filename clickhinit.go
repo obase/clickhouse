@@ -2,7 +2,7 @@ package clickhouse
 
 import (
 	"database/sql"
-	_ "github.com/kshvakov/clickhouse"
+	_ "github.com/ClickHouse/clickhouse-go"
 	"github.com/obase/conf"
 	"net/url"
 	"strconv"
